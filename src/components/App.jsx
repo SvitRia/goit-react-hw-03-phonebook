@@ -17,21 +17,6 @@ export class App extends Component {
 
   };
 
-  componentDidMount() {
-    const savedFilter = localStorage.getItem('name-filters');
-    if (savedFilter !== null) {
-      this.setState({
-        filter: JSON.parse(savedFilter),
-      });
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-
-    if (prevState.filter !== this.state.filter) {
-      localStorage.setItem('name-filters', JSON.stringify(this.state.filter));
-    }
-  }
 
   onChangeFilter = (evt) => {
     this.setState({ filter: evt.currentTarget.value.trim() });
