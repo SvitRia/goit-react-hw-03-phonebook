@@ -17,7 +17,21 @@ export class App extends Component {
 
   };
 
+  componentDidMount() {
+    const savedContacts = localStorage.getItem('name-contacts');
+    if (savedContacts !== null) {
+      this.setState({
+        contacts: JSON.parse(savedContacts),
+      });
+    }
+  }
 
+  componentDidUpdate(prevProps, prevState) {
+
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('name-contacts', JSON.stringify(this.state.contacts));
+    }
+  }
   onChangeFilter = (evt) => {
     this.setState({ filter: evt.currentTarget.value.trim() });
   }
@@ -41,13 +55,17 @@ export class App extends Component {
     } else { 
     this.setState(prevState => ({
       contacts: [...prevState.contacts, { ...newContact, id: nanoid() }],
-    }))};
+    }))
+     
+    
+    };
   };
  
  deleteContact = (contactId) => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
+   
   };
   render() {
     
